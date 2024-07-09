@@ -1,0 +1,48 @@
+Mocha
+Mocha là một thư viện test cho JavaScript, thường được sử dụng để viết và chạy các bài kiểm tra (tests) cho ứng dụng của bạn. 
+Mocha giúp bạn tổ chức và thực hiện các bài kiểm tra một cách dễ dàng và có cấu trúc rõ ràng.
+
+Provider
+Provider trong bối cảnh của Ethereum và Web3.js là một giao diện để kết nối với một blockchain cụ thể (ví dụ như Ethereum). 
+Ganache là một công cụ giúp bạn tạo ra một blockchain Ethereum cục bộ để kiểm tra và phát triển. Khi sử dụng ganache.provider(), 
+bạn đang tạo ra một nhà cung cấp (provider) để Web3.js có thể kết nối và tương tác với blockchain Ganache.
+
+Describe
+describe là một hàm của Mocha dùng để nhóm các bài kiểm tra lại với nhau. 
+Bạn có thể nghĩ về nó như một cách để mô tả một tập hợp các kiểm tra liên quan đến một chức năng cụ thể hoặc một thành phần của ứng dụng. 
+Ví dụ, trong đoạn mã trên, describe('Inbox', () => { ... }) đang nhóm các bài kiểm tra liên quan đến hợp đồng thông minh "Inbox".
+
+It
+it là một hàm của Mocha dùng để định nghĩa một bài kiểm tra đơn lẻ. Mỗi it chứa một hoặc nhiều câu lệnh kiểm tra (assertions) để kiểm tra xem mã 
+của bạn có hoạt động như mong đợi không. Ví dụ, it('deploys a contract', () => { ... }) định nghĩa một bài kiểm tra để kiểm tra việc triển khai 
+hợp đồng.
+
+BeforeEach
+beforeEach là một hàm của Mocha được sử dụng để chạy một số mã trước mỗi bài kiểm tra trong cùng một nhóm (describe). 
+Nó thường được sử dụng để thiết lập các điều kiện ban đầu cần thiết cho các bài kiểm tra. 
+Trong đoạn mã trên, beforeEach(() => { ... }) được sử dụng để lấy danh sách các tài khoản từ Ganache trước mỗi bài kiểm tra.
+
+
+const assert = require('assert');
+const ganache = require('ganache');
+const { Web3 } = require('web3');
+const web3 = new Web3(ganache.provider());
+
+beforeEach(() => {
+    web3.eth.getAccounts()
+        .then(fetchedAccounts => {
+            console.log(fetchedAccounts);
+        });
+});
+
+describe('Inbox', () => {
+    it('deploys a contract', () => {
+        // Kiểm tra việc triển khai hợp đồng
+    });
+});
+Mocha: Thư viện này được sử dụng để định nghĩa và chạy các bài kiểm tra.
+Provider: Ganache được sử dụng để tạo ra một blockchain Ethereum cục bộ để kiểm tra, và ganache.provider() được sử dụng để tạo ra một provider cho Web3.js.
+describe: Hàm này nhóm các bài kiểm tra liên quan đến hợp đồng "Inbox".
+it: Định nghĩa một bài kiểm tra để kiểm tra việc triển khai hợp đồng.
+beforeEach: Hàm này được chạy trước mỗi bài kiểm tra để lấy danh sách các tài khoản từ Ganache.
+Bằng cách này, bạn có thể cấu trúc và tổ chức các bài kiểm tra của mình một cách rõ ràng và hiệu quả.
