@@ -2,7 +2,7 @@ const assert = require('assert');
 const ganache = require('ganache');
 const { Web3 } = require('web3');//constructor
 const web3 = new Web3(ganache.provider());//instance 
-
+const  { interface, bytecode } = require('../compile.js')
 // //get to know Mocha which is to run test 
 // class Car {
 //     park(){
@@ -23,6 +23,7 @@ const web3 = new Web3(ganache.provider());//instance
 
 
 let accounts;
+let inbox;
 
 //fetching accounts from ganache network 
 //account from ganache is unlocked 
@@ -32,12 +33,17 @@ beforeEach (async () => {
     //try async and await to more readable code
     accounts = await web3.eth.getAccounts() //use eth modules of the web3, use the getaccount of eth 
        
-    //Use one ò those account
+    //Use one of those account
+
     //the contract
+    inbox = await new web3.eth.Contract(JSON.parse(interface))
+        .deploy({ data: bytecode, arguments: ['Hi there!'] })
+        .send({ from: accounts[0], gas: '1000000' })
 });
 
 describe('Inbox', () => {
     it('deploys a contract', () => {
-        console.log(accounts);
+        console.log(inbox);
+
     })
 })
